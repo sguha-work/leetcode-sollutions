@@ -1,104 +1,111 @@
 var intToRoman = function (number) {
-  const predefinedValue = {
-    "1": "I",
-    "5": "V",
-    "10": "X",
-    "50": "L",
-    "100": "C",
-    "500": "D",
-    "1000": "M"
-  };
-  let digitArray = []
-  while (number > 0) {
-    digitArray.push(number % 10);
-    number = Math.floor(number / 10);
-  }
-  //digitArray.reverse();
-  console.log(digitArray);
+  let length = number.toString().length;
   let multiplier = 1;
   let romanNumber = '';
-  while (digitArray.length) {
-    const digit = digitArray[0];
+  while (length) {
+    const digit = number % 10;
+    number = Math.floor(number / 10);
     switch (multiplier) {
       case 1:
-        if (digit == 5)
+        switch(digit) {
+          case 5:
           romanNumber = 'V';
-        else if (digit == 1) {
-          romanNumber = 'I';
-        }
-        else if (digit == 2) {
-          romanNumber = 'II';
-        }
-        else if (digit == 3) {
-          romanNumber = 'III';
-        }
-        else if (digit == 4) {
+          break;
+          case 4:
           romanNumber = 'IV';
-        }
-        else if (digit == 6) {
+          break;
+          case 6:
           romanNumber = 'VI';
-        }
-        else if (digit == 7) {
+          break;
+          case 7:
           romanNumber = 'VII';
-        }
-        else if (digit == 8) {
+          break;
+          case 8:
           romanNumber = 'VIII';
-        }
-        else if (digit == 9) {
+          break;
+          case 9:
           romanNumber = 'IX';
+          break;
+          default:
+          for(let index =1; index<=digit; index++) {
+            romanNumber += 'I';
+          } 
+          break;
         }
         break;
       case 10:
-        if (digit == 5) {
+        switch (digit) {
+          case 5:
           romanNumber = 'L' + romanNumber;
-        } else if (digit == 4) {
+          break;
+          case 4:
           romanNumber = 'XL' + romanNumber;
-        } else if (digit == 9) {
+          break;
+          case 9:
           romanNumber = 'XC' + romanNumber;
-        } else if (digit > 5) {
-          let temp = 'L';
-          for (index = 0; index < digit - 5; index++) {
-            temp += 'X';
-          }
-          romanNumber = temp + romanNumber;
-        } else {
+          break;
+          case 6:
+          romanNumber = tempNumber('L','X', digit) + romanNumber;
+          break;
+          case 7:
+          romanNumber = tempNumber('L','X', digit) + romanNumber;
+          break;
+          case 8:
+          romanNumber = tempNumber('L','X', digit) + romanNumber;
+          break;
+          default:
           for (let index = 0; index < digit; index++) {
             romanNumber = 'X' + romanNumber;
           }
+          break;
         }
         break;
       case 100:
-        if (digit == 5) {
+        switch(digit) {
+          case 5:
           romanNumber = 'D' + romanNumber;
-        } else if (digit == 4) {
+          break;
+          case 4:
           romanNumber = 'CD' + romanNumber;
-        } else if (digit == 9) {
+          break;
+          case 9:
           romanNumber = 'CM' + romanNumber;
-        } else if (digit > 5) {
-          let temp = 'D';
-          for (index = 0; index < digit - 5; index++) {
-            temp += 'C';
-          }
-          romanNumber = temp + romanNumber;
-        } else {
+          break;
+          case 6:
+          romanNumber = tempNumber('D','C', digit) + romanNumber;
+          break;
+          case 7:
+          romanNumber = tempNumber('D','C', digit) + romanNumber;
+          break;
+          case 8:
+          romanNumber = tempNumber('D','C', digit) + romanNumber;
+          break;
+          default:
           for (let index = 0; index < digit; index++) {
             romanNumber = 'C' + romanNumber;
           }
+          break;
         }
-        break;
+       break;
        case 1000:
           for (let index = 0; index < digit; index++) {
             romanNumber = 'M' + romanNumber;
           }
         
         break;
+        default:
+        break;
     }
-    digitArray.shift();
     multiplier *= 10;
-
+    length -=1;
   }
-
-  console.log(romanNumber);
+  return romanNumber;
 };
-
+const tempNumber = (startDigit, digitToRepeat, number, subtractNumber=5)=>{
+let temp = startDigit;
+          for (index = 0; index < number - subtractNumber; index++) {
+            temp += digitToRepeat;
+          }
+          return temp;
+}
 intToRoman(5999 );
